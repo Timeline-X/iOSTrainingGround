@@ -1,0 +1,11 @@
+*.DS_Store
+./git/*
+*xcuserdata*
+*.xcuserstate
+build/*
+Build/*
+*/build/*
+*/Build/*
+# Pods
+#
+*/Pods/*
