@@ -7,16 +7,16 @@
 //
 
 #import "LBListViewModel.h"
-#import "LBListModel.h"
 
 @implementation LBListViewModel
 - (void)getDataFromInternet
 {
-    LBListModel *model1 = [[LBListModel alloc] init];
-    model1.userName = @"libo";
+    LBFirstTableViewCellItem *itme1 = [[LBFirstTableViewCellItem alloc] init];
+    itme1.model.userName = @"libo";
+    itme1.model.avatarURLStr = @"http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f61b48166d224e4ade6e.jpg";
+    itme1.model.imageURLStr = @"http://h.hiphotos.baidu.com/image/pic/item/18d8bc3eb13533fa4dd573ada3d3fd1f40345bd6.jpg";
     
-    
-    [self.items addObject:model1];
+    [self.items addObject:itme1];
 }
 
 - (NSMutableArray *)items

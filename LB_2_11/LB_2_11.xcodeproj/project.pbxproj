@@ -17,6 +17,8 @@
 		09FDFCE7202EACA400686D7E /* LBFristTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FDFCE6202EACA400686D7E /* LBFristTableViewCell.m */; };
 		09FDFCEA202EB36000686D7E /* LBListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FDFCE9202EB36000686D7E /* LBListModel.m */; };
 		09FDFCED202EE2A500686D7E /* LBListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FDFCEC202EE2A500686D7E /* LBListViewModel.m */; };
+		09FDFCF0202F3A3C00686D7E /* LBFirstTableViewCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FDFCEF202F3A3C00686D7E /* LBFirstTableViewCellItem.m */; };
+		09FDFCF3202F3E5700686D7E /* LBShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FDFCF2202F3E5700686D7E /* LBShareViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,10 @@
 		09FDFCE9202EB36000686D7E /* LBListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LBListModel.m; sourceTree = "<group>"; };
 		09FDFCEB202EE2A500686D7E /* LBListViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LBListViewModel.h; sourceTree = "<group>"; };
 		09FDFCEC202EE2A500686D7E /* LBListViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LBListViewModel.m; sourceTree = "<group>"; };
+		09FDFCEE202F3A3C00686D7E /* LBFirstTableViewCellItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LBFirstTableViewCellItem.h; sourceTree = "<group>"; };
+		09FDFCEF202F3A3C00686D7E /* LBFirstTableViewCellItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LBFirstTableViewCellItem.m; sourceTree = "<group>"; };
+		09FDFCF1202F3E5700686D7E /* LBShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LBShareViewController.h; sourceTree = "<group>"; };
+		09FDFCF2202F3E5700686D7E /* LBShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LBShareViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,10 +118,14 @@
 				09FDFCB1202E7F7100686D7E /* AppDelegate.m */,
 				09FDFCE2202EABBC00686D7E /* LBTableViewController.h */,
 				09FDFCE3202EABBC00686D7E /* LBTableViewController.m */,
+				09FDFCF1202F3E5700686D7E /* LBShareViewController.h */,
+				09FDFCF2202F3E5700686D7E /* LBShareViewController.m */,
 				09FDFCEB202EE2A500686D7E /* LBListViewModel.h */,
 				09FDFCEC202EE2A500686D7E /* LBListViewModel.m */,
 				09FDFCE5202EACA400686D7E /* LBFristTableViewCell.h */,
 				09FDFCE6202EACA400686D7E /* LBFristTableViewCell.m */,
+				09FDFCEE202F3A3C00686D7E /* LBFirstTableViewCellItem.h */,
+				09FDFCEF202F3A3C00686D7E /* LBFirstTableViewCellItem.m */,
 				09FDFCE8202EB36000686D7E /* LBListModel.h */,
 				09FDFCE9202EB36000686D7E /* LBListModel.m */,
 				09FDFCB9202E7F7100686D7E /* Assets.xcassets */,
@@ -278,7 +288,9 @@
 			files = (
 				09FDFCEA202EB36000686D7E /* LBListModel.m in Sources */,
 				09FDFCC0202E7F7100686D7E /* main.m in Sources */,
+				09FDFCF3202F3E5700686D7E /* LBShareViewController.m in Sources */,
 				09FDFCE4202EABBC00686D7E /* LBTableViewController.m in Sources */,
+				09FDFCF0202F3A3C00686D7E /* LBFirstTableViewCellItem.m in Sources */,
 				09FDFCE7202EACA400686D7E /* LBFristTableViewCell.m in Sources */,
 				09FDFCED202EE2A500686D7E /* LBListViewModel.m in Sources */,
 				09FDFCB2202E7F7100686D7E /* AppDelegate.m in Sources */,

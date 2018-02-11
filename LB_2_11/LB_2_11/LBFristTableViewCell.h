@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LBListModel.h"
+#import "LBFirstTableViewCellItem.h"
+
+@class LBFristTableViewCell;
+
+@protocol LBTableViewCellDelegate <NSObject>
+- (void)tableViewCell:(LBFristTableViewCell *)cell shareButtonDidClicked:(UIButton *)shareButton;
+@end
 
 @interface LBFristTableViewCell : UITableViewCell
-@property (nonatomic, strong) LBListModel *model;
+@property (nonatomic, strong) LBFirstTableViewCellItem *item;
+@property (nonatomic, weak) id <LBTableViewCellDelegate> delegate;
 @end

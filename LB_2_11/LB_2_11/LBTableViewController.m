@@ -9,14 +9,18 @@
 #import "LBTableViewController.h"
 #import "LBFristTableViewCell.h"
 #import "LBListViewModel.h"
+#import "LBShareViewController.h"
+#import "LBFirstTableViewCellItem.h"
 
-@interface LBTableViewController ()
+@interface LBTableViewController () <LBTableViewCellDelegate>
 
 @property (nonatomic, strong) LBListViewModel *viewModel;
 
 @end
 
 @implementation LBTableViewController
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,6 +33,10 @@
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.viewModel = [[LBListViewModel alloc] init];
     [self.viewModel getDataFromInternet];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"refresh"];
+    [self.refreshControl addTarget:(self) action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -47,10 +55,11 @@
     LBFristTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ID"];
     
     if (!cell) {
-        LBFristTableViewCell *cell = [[LBFristTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ID"];
-        if (self.viewModel.items.count > indexPath.row) {
-            cell.model = self.viewModel.items[indexPath.row];
-        }
+        cell = [[LBFristTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ID"];
+        cell.delegate = self;
+    }
+    if (self.viewModel.items.count > indexPath.row) {
+        cell.item = self.viewModel.items[indexPath.row];
     }
     return cell;
 }
@@ -58,7 +67,27 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0;
+    return 400;
+}
+
+#pragma mark - LBTableViewCellDelegate
+- (void)tableViewCell:(LBFristTableViewCell *)cell shareButtonDidClicked:(UIButton *)shareButton
+{
+    LBShareViewController *shareVC = [[LBShareViewController alloc] init];
+    [self.navigationController pushViewController:shareVC animated:YES];
+}
+
+#pragma mark - refresh
+- (void)refreshData
+{
+    [self.refreshControl endRefreshing];
+    LBFirstTableViewCellItem *item1 = [[LBFirstTableViewCellItem alloc] init];
+    item1.model.userName = @"lijun";
+    
+    
+    [self.viewModel.items addObject:item1];
+    
+    [self.tableView reloadData];
 }
 
 @end

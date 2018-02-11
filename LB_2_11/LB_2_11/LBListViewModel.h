@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LBFirstTableViewCellItem.h"
 
 @interface LBListViewModel : NSObject
-@property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *items;
 
 - (void)getDataFromInternet;
 @end
