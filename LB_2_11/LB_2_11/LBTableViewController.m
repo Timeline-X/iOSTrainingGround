@@ -10,7 +10,6 @@
 #import "LBFristTableViewCell.h"
 #import "LBListViewModel.h"
 #import "LBShareViewController.h"
-#import "LBFirstTableViewCellItem.h"
 
 @interface LBTableViewController () <LBTableViewCellDelegate>
 
@@ -81,11 +80,12 @@
 - (void)refreshData
 {
     [self.refreshControl endRefreshing];
-    LBFirstTableViewCellItem *item1 = [[LBFirstTableViewCellItem alloc] init];
-    item1.model.userName = @"lijun";
+//    LBFirstTableViewCellItem *item1 = [[LBFirstTableViewCellItem alloc] init];
+//    item1.model.userName = @"lijun";
     
     
-    [self.viewModel.items addObject:item1];
+//    [self.viewModel.items addObject:item1];
+    [self.viewModel refreshFromInternet];
     
     [self.tableView reloadData];
 }

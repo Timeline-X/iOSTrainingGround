@@ -26,4 +26,13 @@
     }
     return _items;
 }
+
+- (void)refreshFromInternet
+{
+    LBFirstTableViewCellItem *item2 = [[LBFirstTableViewCellItem alloc] init];
+    item2.model.userName = @"lijun";
+    
+    [self.items addObject:item2];
+}
+
 @end

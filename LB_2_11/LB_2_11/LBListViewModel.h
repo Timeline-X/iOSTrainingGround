@@ -13,4 +13,5 @@
 @property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *items;
 
 - (void)getDataFromInternet;
+- (void)refreshFromInternet;
 @end
