@@ -36,6 +36,8 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"refresh"];
     [self.refreshControl addTarget:(self) action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 44)];
 }
 
 
@@ -76,18 +78,23 @@
     [self.navigationController pushViewController:shareVC animated:YES];
 }
 
-#pragma mark - refresh
+#pragma mark - pull down refresh
 - (void)refreshData
 {
     [self.refreshControl endRefreshing];
-//    LBFirstTableViewCellItem *item1 = [[LBFirstTableViewCellItem alloc] init];
-//    item1.model.userName = @"lijun";
-    
-    
-//    [self.viewModel.items addObject:item1];
+
     [self.viewModel refreshFromInternet];
     
     [self.tableView reloadData];
+}
+
+#pragma mark - pull up load more
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height) {
+        [self.viewModel loadMore];
+        [self.tableView reloadData];
+    }
 }
 
 @end

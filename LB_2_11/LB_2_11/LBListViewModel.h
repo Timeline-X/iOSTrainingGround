@@ -14,4 +14,5 @@
 
 - (void)getDataFromInternet;
 - (void)refreshFromInternet;
+- (void)loadMore;
 @end

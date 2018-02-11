@@ -35,4 +35,12 @@
     [self.items addObject:item2];
 }
 
+- (void)loadMore
+{
+    LBFirstTableViewCellItem *item3 = [[LBFirstTableViewCellItem alloc] init];
+    item3.model.userName = @"hehe";
+    
+    [self.items addObject:item3];
+}
+
 @end
