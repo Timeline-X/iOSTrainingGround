@@ -13,7 +13,6 @@
 
 @interface LBTableViewController () <LBTableViewCellDelegate>
 
-@property (nonatomic, strong) LBListViewModel *viewModel;
 
 @end
 
@@ -21,23 +20,27 @@
 
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.viewModel = [[LBListViewModel alloc] init];
-    [self.viewModel getDataFromInternet];
+    
+    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"items.data"];
+    NSMutableArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    if (array) {
+        self.viewModel = [[LBListViewModel alloc] init];
+        self.viewModel.items = array;
+    }
+    
+    else if (!self.viewModel) {
+        self.viewModel = [[LBListViewModel alloc] init];
+        [self.viewModel getDataFromInternet];
+    }
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"refresh"];
     [self.refreshControl addTarget:(self) action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
-    
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 44)];
 }
 
 
@@ -81,17 +84,29 @@
 #pragma mark - pull down refresh
 - (void)refreshData
 {
-    [self.refreshControl endRefreshing];
+    [self.refreshControl beginRefreshing];
 
     [self.viewModel refreshFromInternet];
+    
+    [self.refreshControl endRefreshing];
     
     [self.tableView reloadData];
 }
 
 #pragma mark - pull up load more
+/*
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height) {
+    if ((self.tableView.contentOffset.y + self.tableView.frame.size.height) > self.tableView.contentSize.height) {
+        [self.viewModel loadMore];
+        [self.tableView reloadData];
+    }
+}
+ */
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if ((self.tableView.contentOffset.y + self.tableView.frame.size.height) > self.tableView.contentSize.height) {
         [self.viewModel loadMore];
         [self.tableView reloadData];
     }

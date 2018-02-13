@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LBListViewModel.h"
 
 @interface LBTableViewController : UITableViewController
-
+@property (nonatomic, strong) LBListViewModel *viewModel;
 @end

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LBListModel : NSObject
+@interface LBListModel : NSObject 
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *avatarURLStr;
 @property (nonatomic, copy) NSString *subtitle;

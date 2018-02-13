@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "LBListModel.h"
 
-@interface LBFirstTableViewCellItem : NSObject
+@interface LBFirstTableViewCellItem : NSObject <NSCoding>
 
 @property (nonatomic, strong) LBListModel *model;
 
