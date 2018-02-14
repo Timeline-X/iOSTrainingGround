@@ -26,17 +26,13 @@
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     
-    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"items.data"];
-    NSMutableArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
-    if (array) {
-        self.viewModel = [[LBListViewModel alloc] init];
-        self.viewModel.items = array;
-    }
     
-    else if (!self.viewModel) {
-        self.viewModel = [[LBListViewModel alloc] init];
-        [self.viewModel getDataFromInternet];
-    }
+    self.viewModel = [[LBListViewModel alloc] init];
+    
+    [self.viewModel getData];
+    
+    [self.viewModel addObserver:self forKeyPath:@"remoteDataArray" options:0 context:NULL];
+    
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"refresh"];
@@ -86,7 +82,7 @@
 {
     [self.refreshControl beginRefreshing];
 
-    [self.viewModel refreshFromInternet];
+    [self.viewModel refreshFromRemote];
     
     [self.refreshControl endRefreshing];
     
@@ -109,6 +105,13 @@
     if ((self.tableView.contentOffset.y + self.tableView.frame.size.height) > self.tableView.contentSize.height) {
         [self.viewModel loadMore];
         [self.tableView reloadData];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"remoteDataArray"]) {
+        self.viewModel.items = self.viewModel.remoteDataArray;
     }
 }
 

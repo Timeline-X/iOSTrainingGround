@@ -11,8 +11,12 @@
 
 @interface LBListViewModel : NSObject
 @property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *items;
+@property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *remoteDataArray;
+@property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *localDataArray;
 
-- (void)getDataFromInternet;
-- (void)refreshFromInternet;
+- (void)getData;
+- (void)getDataFromRemote;
+- (void)getDataFromLocal;
+- (void)refreshFromRemote;
 - (void)loadMore;
 @end

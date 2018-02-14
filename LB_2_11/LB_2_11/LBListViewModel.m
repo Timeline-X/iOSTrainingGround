@@ -9,8 +9,20 @@
 #import "LBListViewModel.h"
 
 @implementation LBListViewModel
+
 @synthesize items = _items;
-- (void)getDataFromInternet
+
+- (void)getData
+{
+    __weak LBListViewModel *weakSelf = self;
+    dispatch_queue_t dataQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_CONCURRENT);
+    dispatch_async(dataQueue, ^{
+       [weakSelf getDataFromRemote];
+       [weakSelf getDataFromLocal];
+    });
+}
+
+- (void)getDataFromRemote
 {
     LBFirstTableViewCellItem *item1 = [[LBFirstTableViewCellItem alloc] init];
     item1.model.userName = @"libo";
@@ -22,9 +34,22 @@
     item2.model.avatarURLStr = @"http://imgstore.cdn.sogou.com/app/a/11220002/26182_pc.jpg";
     item2.model.imageURLStr = @"http://upload.site.cnhubei.com/2015/0921/thumb_940__1442822393510.jpg";
     
+    NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:item1, item2, nil];
     
-    [self.items addObject:item1];
-    [self.items addObject:item2];
+    if (array) {
+        self.remoteDataArray = array;
+    }
+}
+
+- (void)getDataFromLocal
+{
+    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"items.data"];
+    NSMutableArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    
+    if (array) {
+        self.localDataArray = array;
+        self.items = self.localDataArray;
+    }
 }
 
 - (NSMutableArray *)items
@@ -39,11 +64,27 @@
 {
     if (!_items) {
         _items = [[NSMutableArray alloc] init];
-        _items = items;
     }
+    _items = items;
 }
 
-- (void)refreshFromInternet
+- (void)setRemoteDataArray:(NSMutableArray<LBFirstTableViewCellItem *> *)remoteDataArray
+{
+    if (!_remoteDataArray) {
+        _remoteDataArray = [[NSMutableArray alloc] init];
+    }
+    _remoteDataArray = remoteDataArray;
+}
+
+- (void)setLocalDataArray:(NSMutableArray<LBFirstTableViewCellItem *> *)localDataArray
+{
+    if (!_localDataArray) {
+        _localDataArray = [[NSMutableArray alloc] init];
+    }
+    _localDataArray = localDataArray;
+}
+
+- (void)refreshFromRemote
 {
     
     LBFirstTableViewCellItem *item = [[LBFirstTableViewCellItem alloc] init];
@@ -66,6 +107,8 @@
     
     [self.items addObject:item];
     [self.items addObject:item1];
+    
+    [self writeToFile];
 }
 
 - (void)loadMore
@@ -77,7 +120,15 @@
         item.model.imageURLStr = @"http://www.kaixian.tv/gd/d/file/201801/05/ae506fb05390e11501c7f3d6e387a475.jpeg?imageView&thumbnail=550x0";
         
         [self.items addObject:item];
+        
+        [self writeToFile];
     } else return;
+}
+
+- (void)writeToFile
+{
+    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"items.data"];
+    [NSKeyedArchiver archiveRootObject:self.items toFile:file];
 }
 
 @end
