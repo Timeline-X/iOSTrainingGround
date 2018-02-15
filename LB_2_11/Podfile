@@ -1,0 +1,4 @@
+target 'LB_2_11' do
+	pod 'SDWebImage', '~> 4.0'
+	pod 'KVOController'
+end

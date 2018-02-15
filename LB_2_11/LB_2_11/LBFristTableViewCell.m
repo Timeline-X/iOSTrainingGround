@@ -8,6 +8,8 @@
 
 #import "LBFristTableViewCell.h"
 #import "LBEncryption.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 @interface LBFristTableViewCell ()
 
@@ -36,8 +38,10 @@
     self.userNameLabel.text = _item.model.userName;
     self.subtitle.text = _item.model.subtitle;
     
-    [self downloadAvatraImage];
-    [self downloadDataImage];
+    [self.avatarImage sd_setImageWithURL:[NSURL URLWithString:self.item.model.avatarURLStr]];
+    [self.dataImage sd_setImageWithURL:[NSURL URLWithString:self.item.model.imageURLStr]];
+//    [self downloadAvatraImage];
+//    [self downloadDataImage];
 }
 
 - (void)downloadAvatraImage
