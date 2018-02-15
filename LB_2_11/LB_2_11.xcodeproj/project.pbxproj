@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0927EBC220356BE600D96CD7 /* LBEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 0927EBC120356BE600D96CD7 /* LBEncryption.m */; };
 		09FDFCB2202E7F7100686D7E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FDFCB1202E7F7100686D7E /* AppDelegate.m */; };
 		09FDFCBA202E7F7100686D7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09FDFCB9202E7F7100686D7E /* Assets.xcassets */; };
 		09FDFCBD202E7F7100686D7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FDFCBB202E7F7100686D7E /* LaunchScreen.storyboard */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0927EBC020356BE600D96CD7 /* LBEncryption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LBEncryption.h; sourceTree = "<group>"; };
+		0927EBC120356BE600D96CD7 /* LBEncryption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LBEncryption.m; sourceTree = "<group>"; };
 		09FDFCAD202E7F7000686D7E /* LB_2_11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LB_2_11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FDFCB0202E7F7100686D7E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		09FDFCB1202E7F7100686D7E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 				09FDFCEF202F3A3C00686D7E /* LBFirstTableViewCellItem.m */,
 				09FDFCE8202EB36000686D7E /* LBListModel.h */,
 				09FDFCE9202EB36000686D7E /* LBListModel.m */,
+				0927EBC020356BE600D96CD7 /* LBEncryption.h */,
+				0927EBC120356BE600D96CD7 /* LBEncryption.m */,
 				09FDFCB9202E7F7100686D7E /* Assets.xcassets */,
 				09FDFCBB202E7F7100686D7E /* LaunchScreen.storyboard */,
 				09FDFCBE202E7F7100686D7E /* Info.plist */,
@@ -290,6 +295,7 @@
 				09FDFCC0202E7F7100686D7E /* main.m in Sources */,
 				09FDFCF3202F3E5700686D7E /* LBShareViewController.m in Sources */,
 				09FDFCE4202EABBC00686D7E /* LBTableViewController.m in Sources */,
+				0927EBC220356BE600D96CD7 /* LBEncryption.m in Sources */,
 				09FDFCF0202F3A3C00686D7E /* LBFirstTableViewCellItem.m in Sources */,
 				09FDFCE7202EACA400686D7E /* LBFristTableViewCell.m in Sources */,
 				09FDFCED202EE2A500686D7E /* LBListViewModel.m in Sources */,

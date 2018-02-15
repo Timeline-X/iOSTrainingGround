@@ -13,5 +13,53 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LB_2_11/LBFristTableViewCell.m"
+            timestampString = "540374073.956241"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "-downloadDataImage"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[LBFristTableViewCell downloadDataImage]"
+                  moduleName = "LB_2_11"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/libo/Document/iOSTrainingGround/LB_2_11/LB_2_11/LBFristTableViewCell.m"
+                  timestampString = "540374073.9912159"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "694">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[LBFristTableViewCell downloadDataImage]_block_invoke"
+                  moduleName = "LB_2_11"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/libo/Document/iOSTrainingGround/LB_2_11/LB_2_11/LBFristTableViewCell.m"
+                  timestampString = "540374073.995556"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

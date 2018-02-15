@@ -13,10 +13,18 @@
 
 @interface LBTableViewController () <LBTableViewCellDelegate>
 
+@property (nonatomic, strong) LBListViewModel *viewModel;
+
 
 @end
 
 @implementation LBTableViewController
+
+
+-(void)dealloc {
+    [self.viewModel removeObserver:self forKeyPath:NSStringFromSelector(@selector(remoteDataArray))];
+    [self.viewModel removeObserver:self forKeyPath:NSStringFromSelector(@selector(localDataArray))];
+}
 
 
 
@@ -24,14 +32,18 @@
 {
     [super viewDidLoad];
     
+    
     self.tableView.backgroundColor = [UIColor whiteColor];
     
     
     self.viewModel = [[LBListViewModel alloc] init];
     
-    [self.viewModel getData];
     
-    [self.viewModel addObserver:self forKeyPath:@"remoteDataArray" options:0 context:NULL];
+    
+    [self.viewModel addObserver:self forKeyPath:NSStringFromSelector(@selector(remoteDataArray)) options:0 context:NULL];
+    [self.viewModel addObserver:self forKeyPath:NSStringFromSelector(@selector(localDataArray)) options:0 context:NULL];
+    
+    [self.viewModel getData];
     
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -113,6 +125,15 @@
     if ([keyPath isEqualToString:@"remoteDataArray"]) {
         self.viewModel.items = self.viewModel.remoteDataArray;
     }
+    if ([keyPath isEqualToString:@"localDataArray"]) {
+        if (!self.viewModel.remoteDataArray) {
+            self.viewModel.items = self.viewModel.localDataArray;
+        }
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 @end

@@ -15,10 +15,15 @@
 - (void)getData
 {
     __weak LBListViewModel *weakSelf = self;
-    dispatch_queue_t dataQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(dataQueue, ^{
-       [weakSelf getDataFromRemote];
-       [weakSelf getDataFromLocal];
+    
+    dispatch_queue_t remoteQueue = dispatch_queue_create(NULL, 0);
+    dispatch_async(remoteQueue, ^{
+        [weakSelf getDataFromRemote];
+    });
+    
+    dispatch_queue_t localQueue = dispatch_queue_create(NULL, 0);
+    dispatch_async(localQueue, ^{
+        [weakSelf getDataFromLocal];
     });
 }
 
@@ -48,7 +53,6 @@
     
     if (array) {
         self.localDataArray = array;
-        self.items = self.localDataArray;
     }
 }
 

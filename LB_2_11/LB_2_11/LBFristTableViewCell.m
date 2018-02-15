@@ -7,13 +7,10 @@
 //
 
 #import "LBFristTableViewCell.h"
+#import "LBEncryption.h"
 
 @interface LBFristTableViewCell ()
-@property (nonatomic, strong) UILabel *userNameLabel;
-@property (nonatomic, strong) UIImageView *avatarImage;
-@property (nonatomic, strong) UILabel *subtitle;
-@property (nonatomic, strong) UIImageView *dataImage;
-@property (nonatomic, strong) UIButton *shareButton;
+
 @end
 
 @implementation LBFristTableViewCell
@@ -30,23 +27,27 @@
     return self;
 }
 
+
+
 - (void)setItem:(LBFirstTableViewCellItem *)item
 {
     _item = item;
     
     self.userNameLabel.text = _item.model.userName;
     self.subtitle.text = _item.model.subtitle;
+    
     [self downloadAvatraImage];
     [self downloadDataImage];
 }
 
 - (void)downloadAvatraImage
 {
+    self.avatarImage.image = nil;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.item.model.avatarURLStr]];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (!error) {
+        if (!error && [self.item.model.avatarURLStr isEqualToString:request.URL.absoluteString]) {
             UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.avatarImage.image = image;
@@ -58,18 +59,47 @@
 
 - (void)downloadDataImage
 {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.item.model.imageURLStr]];
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (!error) {
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+    self.dataImage.image = nil;
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"imageCache"];
+    
+    if (![fm fileExistsAtPath:path]) {
+        [fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    NSString *md5Path = [LBEncryption md5EncryptinWithString:self.item.model.imageURLStr];
+    NSString *filePath = [path stringByAppendingPathComponent:md5Path];
+    
+    if ([fm fileExistsAtPath:filePath]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+        
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.dataImage.image = image;
+                
             });
-        }
-    }];
-    [task resume];
+        });
+    }
+    
+    else {
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.item.model.imageURLStr]];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (!error && [self.item.model.imageURLStr isEqualToString:request.URL.absoluteString]) {
+                UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+                
+                NSData *imageData = UIImagePNGRepresentation(image);
+                [imageData writeToFile:filePath atomically:NO];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.dataImage.image = image;
+                });
+            }
+        }];
+        [task resume];
+    }
 }
 
 #pragma mark - Action

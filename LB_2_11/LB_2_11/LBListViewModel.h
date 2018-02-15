@@ -15,8 +15,6 @@
 @property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *localDataArray;
 
 - (void)getData;
-- (void)getDataFromRemote;
-- (void)getDataFromLocal;
 - (void)refreshFromRemote;
 - (void)loadMore;
 @end

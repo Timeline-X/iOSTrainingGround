@@ -18,4 +18,12 @@
 @interface LBFristTableViewCell : UITableViewCell
 @property (nonatomic, strong) LBFirstTableViewCellItem *item;
 @property (nonatomic, weak) id <LBTableViewCellDelegate> delegate;
+
+@property (nonatomic, strong) UILabel *userNameLabel;
+@property (nonatomic, strong) UIImageView *avatarImage;
+@property (nonatomic, strong) UILabel *subtitle;
+@property (nonatomic, strong) UIImageView *dataImage;
+@property (nonatomic, strong) UIButton *shareButton;
+
+- (void)downloadDataImage;
 @end
