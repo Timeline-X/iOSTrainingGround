@@ -7,6 +7,7 @@
 //
 
 #import "LBListViewModel.h"
+#import <AFNetworking.h>
 
 @implementation LBListViewModel
 
@@ -29,6 +30,9 @@
 
 - (void)getDataFromRemote
 {
+    
+    
+    
     LBFirstTableViewCellItem *item1 = [[LBFirstTableViewCellItem alloc] init];
     item1.model.userName = @"libo";
     item1.model.avatarURLStr = @"http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f61b48166d224e4ade6e.jpg";
