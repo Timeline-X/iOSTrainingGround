@@ -1,7 +1,7 @@
 *.DS_Store
 ./git/*
 *xcuserdata*
-*.xcuserstate
+*/*.xcuserstate
 build/*
 Build/*
 */build/*

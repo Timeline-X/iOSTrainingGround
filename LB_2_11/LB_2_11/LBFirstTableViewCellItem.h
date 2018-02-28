@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "LBListModel.h"
+#import "JSONModel.h"
 
-@interface LBFirstTableViewCellItem : NSObject <NSCoding>
+@interface LBFirstTableViewCellItem : JSONModel <NSCoding>
 
-@property (nonatomic, strong) LBListModel *model;
+@property (nonatomic, strong) LBListModel <Optional> *model;
 
 @end

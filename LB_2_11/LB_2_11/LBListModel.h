@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONModel.h"
 
-@interface LBListModel : NSObject 
+@interface LBListModel : JSONModel
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *avatarURLStr;
 @property (nonatomic, copy) NSString *subtitle;

@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "LBFirstTableViewCellItem.h"
+#import "JSONModel.h"
 
-@interface LBListViewModel : NSObject
+@interface LBListViewModel : JSONModel
 @property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *items;
 @property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *remoteDataArray;
 @property (nonatomic, strong) NSMutableArray <LBFirstTableViewCellItem *> *localDataArray;

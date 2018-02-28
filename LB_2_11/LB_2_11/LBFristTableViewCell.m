@@ -9,6 +9,7 @@
 #import "LBFristTableViewCell.h"
 #import "LBEncryption.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <AFURLSessionManager.h>
 
 
 @interface LBFristTableViewCell ()

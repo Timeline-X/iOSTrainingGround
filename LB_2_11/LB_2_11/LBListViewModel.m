@@ -8,10 +8,32 @@
 
 #import "LBListViewModel.h"
 #import <AFNetworking.h>
+#import <YYCache.h>
+
+@interface LBListViewModel ()
+@property (nonatomic, strong) YYCache *cache;
+@property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
+@end
 
 @implementation LBListViewModel
 
-@synthesize items = _items;
+
+
+- (YYCache *)cache
+{
+    if (!_cache) {
+        _cache = [YYCache cacheWithName:@"LBCache"];
+    }
+    return _cache;
+}
+
+- (AFHTTPSessionManager *)sessionManager
+{
+    if (!_sessionManager) {
+        _sessionManager = [AFHTTPSessionManager manager];
+    }
+    return _sessionManager;
+}
 
 - (void)getData
 {
@@ -30,43 +52,63 @@
 
 - (void)getDataFromRemote
 {
+    [self.sessionManager GET:@"http://1234"
+                  parameters:nil
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                         NSLog(@"%@", responseObject);
+                         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                             NSArray *array = [responseObject objectForKey:@"data"];
+                             NSMutableArray *itemArray = [[NSMutableArray alloc] init];
+                             for (NSDictionary *itemInfo in array) {
+                                 if ([itemInfo isKindOfClass:[NSDictionary class]]) {
+                                     LBFirstTableViewCellItem *item = [[LBFirstTableViewCellItem alloc] init];
+                                     item.model = [[LBListModel alloc] initWithDictionary:itemInfo error:nil];
+                                     [itemArray addObject:item];
+                                 }
+                             }
+                             self.remoteDataArray = itemArray;
+                             return ;
+                         }
+                         // error handle
+                     }
+                     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                         
+                     }];
     
-    
-    
-    LBFirstTableViewCellItem *item1 = [[LBFirstTableViewCellItem alloc] init];
-    item1.model.userName = @"libo";
-    item1.model.avatarURLStr = @"http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f61b48166d224e4ade6e.jpg";
-    item1.model.imageURLStr = @"http://h.hiphotos.baidu.com/image/pic/item/18d8bc3eb13533fa4dd573ada3d3fd1f40345bd6.jpg";
-    
-    LBFirstTableViewCellItem *item2 = [[LBFirstTableViewCellItem alloc] init];
-    item2.model.userName = @"iiii";
-    item2.model.avatarURLStr = @"http://imgstore.cdn.sogou.com/app/a/11220002/26182_pc.jpg";
-    item2.model.imageURLStr = @"http://upload.site.cnhubei.com/2015/0921/thumb_940__1442822393510.jpg";
-    
-    NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:item1, item2, nil];
-    
-    if (array) {
-        self.remoteDataArray = array;
-    }
+//    LBFirstTableViewCellItem *item1 = [[LBFirstTableViewCellItem alloc] init];
+//    item1.model.userName = @"libo";
+//    item1.model.avatarURLStr = @"http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f61b48166d224e4ade6e.jpg";
+//    item1.model.imageURLStr = @"http://h.hiphotos.baidu.com/image/pic/item/18d8bc3eb13533fa4dd573ada3d3fd1f40345bd6.jpg";
+//
+//    LBFirstTableViewCellItem *item2 = [[LBFirstTableViewCellItem alloc] init];
+//    item2.model.userName = @"iiii";
+//    item2.model.avatarURLStr = @"http://imgstore.cdn.sogou.com/app/a/11220002/26182_pc.jpg";
+//    item2.model.imageURLStr = @"http://upload.site.cnhubei.com/2015/0921/thumb_940__1442822393510.jpg";
+//
+//    NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:item1, item2, nil];
+//
+//    if (array) {
+//        self.remoteDataArray = array;
+//    }
 }
 
 - (void)getDataFromLocal
 {
-    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"items.data"];
-    NSMutableArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
+//    NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"items.data"];
+//    NSMutableArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
     
-    if (array) {
+    id array = [self.cache objectForKey:@"itemsData"];
+    
+    if ([array isKindOfClass:[NSArray class]]) {
         self.localDataArray = array;
     }
+    
+    
 }
 
-- (NSMutableArray *)items
-{
-    if (!_items) {
-        _items = [[NSMutableArray alloc] init];
-    }
-    return _items;
-}
+
+
 
 - (void)setItems:(NSMutableArray<LBFirstTableViewCellItem *> *)items
 {
@@ -74,14 +116,6 @@
         _items = [[NSMutableArray alloc] init];
     }
     _items = items;
-}
-
-- (void)setRemoteDataArray:(NSMutableArray<LBFirstTableViewCellItem *> *)remoteDataArray
-{
-    if (!_remoteDataArray) {
-        _remoteDataArray = [[NSMutableArray alloc] init];
-    }
-    _remoteDataArray = remoteDataArray;
 }
 
 - (void)setLocalDataArray:(NSMutableArray<LBFirstTableViewCellItem *> *)localDataArray
@@ -116,7 +150,12 @@
     [self.items addObject:item];
     [self.items addObject:item1];
     
-    [self writeToFile];
+    
+    
+    
+    [self.cache setObject:self.items forKey:@"itemsData"];
+    
+//    [self writeToFile];
 }
 
 - (void)loadMore
@@ -129,7 +168,9 @@
         
         [self.items addObject:item];
         
-        [self writeToFile];
+        [self.cache setObject:self.items forKey:@"itemsData"];
+        
+//        [self writeToFile];
     } else return;
 }
 
