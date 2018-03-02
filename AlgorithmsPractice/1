@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+	
+	int a[] = {1, 2, 3, 4, 5, 6};
+	int b[] = {2, 4, 6, 8, 10};
+	
+	int c[8];
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	while (i < 6 && j < 5) {
+		if (a[i] < b[j]) {
+			c[k] = a[i];
+			i++;
+			k++;
+		}
+		else if (a[i] > b[j]){
+			c[k] = b[j];
+			j++;
+			k++;
+		}
+		else {
+			c[k] = a[i];
+			i++;
+			j++;
+			k++;
+		}
+	}
+	while (i == 6 && j < 5) {
+		c[k] = b[j];
+		k++;
+		j++;
+	}
+	while (i < 6 && j == 5) {
+		c[k] = a[i];
+		i++;
+		k++;
+	}
+	for (i = 0; i < 8; i++) {
+		printf("%d ", c[i]);
+	}
+	return 0;
+}
